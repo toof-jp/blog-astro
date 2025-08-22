@@ -1,1 +1,1 @@
-# blog-next-js
+# blog-astro
