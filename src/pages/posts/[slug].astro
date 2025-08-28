@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
 import HatenaId from '../../components/HatenaId.tsx';
 
 export const getStaticPaths = async () => {
@@ -14,9 +15,6 @@ const { post } = Astro.props;
 const { Content } = await post.render();
 ---
 
-<head>
-<meta charset="utf-8">
-</head>
-<body>
+<Layout>
 <Content components={{ HatenaId }} />
-</body>
+</Layout>
