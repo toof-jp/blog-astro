@@ -4,4 +4,7 @@ import react from '@astrojs/react';
 
 export default defineConfig({
   integrations: [mdx(), react()],
+  redirects: {
+    '/posts': '/archive',
+  },
 });
