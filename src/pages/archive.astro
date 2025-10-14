@@ -5,6 +5,7 @@ const blogEntries = await getCollection('posts');
 ---
 
 <Layout>
+<h1>記事一覧</h1>
 <ul>
   {blogEntries.map(blogPostEntry => (
     <li>

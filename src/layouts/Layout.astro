@@ -1,5 +1,5 @@
 ---
-
+import Nav from "../components/Nav.astro";
 ---
 
 <html lang="en">
@@ -11,6 +11,23 @@
 		<title>blog.toof.jp</title>
 	</head>
 	<body>
+		<Nav />
         <slot />
 	</body>
 </html>
+
+<style is:global>
+	html {
+		font-family: sans-serif;
+	}
+	body {
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	img, video, iframe {
+		max-width: 100%;
+		height: auto;
+		display: block;
+	}
+</style>

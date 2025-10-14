@@ -1,0 +1,64 @@
+---
+title: mitmproxyでHARファイルに複数リクエストを保存する
+date: 2025-10-14T12:42:06+09:00
+---
+
+curlコマンドなどで複数リクエストを送信して、それらの複数リクエストのかかった時間などを調査したい場面がありました。
+この記事では、mitmproxyを使って立ち上げたproxy server経由で送った複数のリクエストを複数のHARファイルに保存する方法を紹介します。
+
+## HARファイルとは
+HARファイルとは、HTTP Archiveファイルのことで、複数のリクエストの情報を保存することができます。
+Chrome DevToolsなどのブラウザの開発者ツールからリクエストを保存することもできます。
+
+## mitmproxyとは
+mitmproxyとはプロキシサーバーを立ち上げてHTTP通信などを観察できるツールです。
+
+## 注意点
+mitmproxyがHARファイルをサポートしたのは10.1からです。
+APTでインストールできるmitmproxyのバージョンは8.1.1と非常に古くHARファイルをサポートしていません。
+公式が配布しているLinuxのバイナリをダウンロードするか、[公式のDockerイメージ](https://hub.docker.com/r/mitmproxy/mitmproxy/)を使用してください。
+
+## シェルスクリプト
+シェルスクリプトでの実装例を紹介します。
+
+```shell
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+mitmdump --set hardump=dump.har &
+mitmdump_pid=$!
+
+# sleep until mitmdump starts
+sleep 1
+
+readonly base_url_prefix="https://prime-numbers.toof.workers.dev/?offset="
+
+declare -a curl_pids=()
+
+for ((i = 0; i < 100; i++)); do
+  offset=$((i * 10))
+  request_url="${base_url_prefix}${offset}"
+
+  curl --proxy http://127.0.0.1:8080 --insecure "$@" "$request_url" &
+  curl_pids+=("$!")
+  sleep 0.1
+done
+
+exit_code=0
+for pid in "${curl_pids[@]}"; do
+  if ! wait "$pid"; then
+    exit_code=1
+  fi
+done
+
+kill $mitmdump_pid
+wait $mitmdump_pid
+
+exit "$exit_code"
+```
+
+実装上の注意点としては以下の項目が挙げられます
+
+- mitmdumpコマンドを実行してから、proxy serverを起動するまで待つ必要がある
+- mitmdumpのプロセスがkillされた時に、HARファイルに保存するので、killコマンドでSIGTERMを送信してから実際にkillされるまでwaitコマンドで待つ必要がある
