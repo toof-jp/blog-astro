@@ -58,7 +58,7 @@ wait $mitmdump_pid
 exit "$exit_code"
 ```
 
-実装上の注意点としては以下の項目が挙げられます
+実装上の注意点としては以下の項目が挙げられます。
 
 - mitmdumpコマンドを実行してから、proxy serverを起動するまで待つ必要がある
 - mitmdumpのプロセスがkillされた時に、HARファイルに保存するので、killコマンドでSIGTERMを送信してから実際にkillされるまでwaitコマンドで待つ必要がある
