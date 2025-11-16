@@ -8,7 +8,8 @@ import Nav from "../components/Nav.astro";
 		<link rel="icon" type="image/svg+xml" href="https://toof.jp/icon.png" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>blog.toof.jp</title>
+    <title>blog.toof.jp</title>
+    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc5deccf24db4a0f8fc0f7a90d349c0d"}'></script><!-- End Cloudflare Web Analytics -->
 	</head>
 	<body>
 		<Nav />
@@ -20,14 +21,20 @@ import Nav from "../components/Nav.astro";
 	html {
 		font-family: sans-serif;
 	}
+
 	body {
 		max-width: 600px;
 		margin: 0 auto;
+		padding: 16px 24px; 
 	}
 
 	img, video, iframe {
 		max-width: 100%;
 		height: auto;
 		display: block;
+	}
+	
+	pre.astro-code.github-dark {
+		padding: 10px;
 	}
 </style>

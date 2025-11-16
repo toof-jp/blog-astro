@@ -1,6 +1,7 @@
 ---
 title: mitmproxyでHARファイルに複数のHTTPリクエストを保存する
 date: 2025-10-14T12:42:06+09:00
+published: true
 ---
 
 curlコマンドなどで複数リクエストを送信して、それらの複数リクエストのかかった時間などを調査したい場面がありました。
@@ -13,7 +14,7 @@ Chrome DevToolsなどのブラウザの開発者ツールからリクエスト�
 ## mitmproxyとは
 mitmproxyとはプロキシサーバーを立ち上げてHTTP通信などを観察できるツールです。
 
-## 注意点
+### インストール時の注意点
 mitmproxyがHARファイルをサポートしたのは10.1からです。
 APTでインストールできるmitmproxyのバージョンは8.1.1と非常に古くHARファイルをサポートしていません。
 公式が配布しているLinuxのバイナリをダウンロードするか、[公式のDockerイメージ](https://hub.docker.com/r/mitmproxy/mitmproxy/)を使用してください。
