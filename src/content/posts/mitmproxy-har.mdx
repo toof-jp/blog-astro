@@ -1,5 +1,5 @@
 ---
-title: mitmproxyでHARファイルに複数リクエストを保存する
+title: mitmproxyでHARファイルに複数のHTTPリクエストを保存する
 date: 2025-10-14T12:42:06+09:00
 ---
 
@@ -58,7 +58,7 @@ wait $mitmdump_pid
 exit "$exit_code"
 ```
 
-実装上の注意点としては以下の項目が挙げられます。
+実装上の注意点としては以下の点が挙げられます。
 
 - mitmdumpコマンドを実行してから、proxy serverを起動するまで待つ必要がある
-- mitmdumpのプロセスがkillされた時に、HARファイルに保存するので、killコマンドでSIGTERMを送信してから実際にkillされるまでwaitコマンドで待つ必要がある
+- mitmdumpのプロセスがkillされた時にHARファイルに出力されるので、killコマンドでSIGTERMを送信してから実際にプロセスが終了するまでwaitコマンドで待つ必要がある
